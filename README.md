@@ -1,138 +1,191 @@
-# 🏠 Ultimate Rent Consultant
+## TrustRent – Evidence-First Move‑In Inspections for Renters and Property Managers
 
-> Turn paper move-in checklists into digital evidence with AI-powered parsing and before/after photo comparison.
+TrustRent is a production‑ready web app that helps renters **prove the true condition of their unit** and helps property managers **standardize move‑in inspections** across entire portfolios.
 
-![Next.js](https://img.shields.io/badge/Next.js-16-black)
-![React](https://img.shields.io/badge/React-19-blue)
-![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)
-![Google Gemini](https://img.shields.io/badge/Google_Gemini-1.5_Flash-green)
-![License](https://img.shields.io/badge/License-MIT-yellow)
-
-## 🚀 Quick Start
-
-```bash
-# Install dependencies
-npm install
-
-# Run development server
-npm run dev
-
-# Open http://localhost:3000
-```
-
-**That's it!** The app works perfectly without any API keys using mock data.
-
-## ✨ Features
-
-- 📸 **Upload checklist photo** → AI extracts items automatically
-- ✏️ **Edit & organize** → Customize items, add notes
-- 📷 **Before/after photos** → Attach move-in and move-out photos per area
-- 🔄 **Side-by-side comparison** → Show landlord proof of no damage
-- 💾 **Auto-save** → All data persists in browser (localStorage)
-- 📱 **Mobile-friendly** → Fully responsive design
-
-## 🆓 Optional: FREE AI Parsing
-
-Want **real AI-powered checklist parsing** instead of mock data?
-
-1. Get a FREE API key (2 minutes): https://aistudio.google.com/app/apikey
-2. Open `src/config.ts` and paste your key:
-   ```typescript
-   GOOGLE_GEMINI_API_KEY: 'your-key-here',
-   ```
-3. Save and restart the dev server
-
-**Free tier**: 1,500 requests/day, no credit card required! 🎉
-
-📖 **Step-by-step guide**: [HOW-TO-ADD-API-KEY.md](./HOW-TO-ADD-API-KEY.md)
-
-## 📚 Documentation
-
-- **[SETUP.md](./rent-consultant/SETUP.md)** - Full setup guide & tech stack
-- **[HACKATHON-DEMO.md](./rent-consultant/HACKATHON-DEMO.md)** - Demo script & talking points
-- **[GEMINI-API-SETUP.md](./rent-consultant/GEMINI-API-SETUP.md)** - Step-by-step API key guide
-
-## 🎯 The Problem We Solve
-
-Students and renters often **lose their security deposits** due to:
-- ❌ No proof of pre-existing damage
-- ❌ Missing photos with timestamps
-- ❌ Messy paper checklists that get lost
-- ❌ Difficulty comparing move-in vs move-out condition
-
-## 💡 Our Solution
-
-A mobile-first web app that:
-1. Digitizes paper checklists using AI vision
-2. Organizes inspection items in a clean interface
-3. Captures before/after photos for each area
-4. Preserves evidence with timestamps
-5. Enables side-by-side comparison during move-out
-
-## 🛠️ Tech Stack
-
-- **Next.js 16** - React framework with App Router
-- **React 19** - Latest React with TypeScript
-- **Tailwind CSS** - Utility-first styling
-- **Google Gemini 1.5 Flash** - FREE AI vision API
-- **localStorage** - Client-side data persistence
-
-## 📱 Mobile Testing
-
-The app is fully responsive! Test on your phone:
-
-```bash
-# After running npm run dev, look for the Network URL:
-# Example: http://10.141.19.139:3000
-
-# Open that URL on your phone (same WiFi network)
-```
-
-## 🎬 Demo Flow
-
-1. **Upload** a paper checklist photo
-2. **AI extracts** all checklist items (or use mock data)
-3. **Edit** items to match your needs
-4. **Take photos** of each area when you move in
-5. **Take photos** again when you move out
-6. **Compare** side-by-side to prove no new damage
-
-## 🔮 Future Features
-
-- 📄 Export checklist as PDF report
-- ☁️ Cloud storage integration
-- 📋 Lease document parsing & analysis
-- 🤖 AI-powered damage detection
-- 📍 Geolocation & timestamp metadata
-- 🏢 Multi-property support
-
-## 📊 Market Opportunity
-
-- 🎯 **Target users**: 20M+ college students in US
-- 💸 **Average deposit**: $1,000-2,000
-- 📉 **Deposit disputes**: 50% of renters face issues
-- ⏰ **Time saved**: 2 hours of manual checklist entry
-
-## 🤝 Contributing
-
-This is a hackathon project! Feel free to:
-- Report bugs
-- Suggest features
-- Submit pull requests
-- Fork and customize for your needs
-
-## 📄 License
-
-MIT License - feel free to use for your own projects!
-
-## 🙏 Acknowledgments
-
-- Built with [Next.js](https://nextjs.org/)
-- AI powered by [Google Gemini](https://ai.google.dev/)
-- Styled with [Tailwind CSS](https://tailwindcss.com/)
+Renters use a guided checklist, photos, and AI‑assisted lease analysis to create a defensible inspection report. Property managers invite renters via email, track participation, and access submitted PDFs for every unit.
 
 ---
 
-**Built for hackathon. Made with ❤️ for renters everywhere.**
+### 🎯 What Problem Does TrustRent Solve?
 
-Questions? Check the [documentation](./rent-consultant/) or open an issue!
+Move‑in inspections today are usually:
+
+- Paper checklists that get lost or never fully filled out  
+- Photos scattered across phones with no structure or narrative  
+- No standard process across buildings or leasing teams  
+- Security‑deposit disputes where it becomes **“my word vs. yours”**  
+
+This hurts:
+
+- **Renters**, who often lose money because they can’t prove pre‑existing damage.  
+- **Property managers and owners**, who waste time on disputes and lack a consistent inspection workflow.  
+
+TrustRent turns this into a **structured, auditable process** with a clear digital paper trail.
+
+---
+
+### 👥 Who TrustRent Is For
+
+- **Renters / Tenants**
+  - Guided move‑in checklist with photo evidence  
+  - One place to store inspection data and a final PDF report  
+
+- **Property Managers & Owners**
+  - Invite renters with a 6‑digit token and email  
+  - Portfolio view of buildings, units, invitations, and active renters  
+  - Downloadable PDFs for each unit’s inspection record  
+
+- **Leasing / Ops Teams**
+  - Standardized inspection workflow across properties  
+  - Central source of truth for internal questions and deposit disputes  
+
+---
+
+### ✨ Core Features
+
+- **Token‑based renter onboarding**
+  - Admins create a company, apartments, and units.  
+  - Each renter receives a unique 6‑digit **access token** by email with a link to the hosted app (`/access`).  
+  - Renter verifies the token and creates an account tied to the correct unit and company.  
+
+- **Guided move‑in checklist from a photo**
+  - Renter takes a photo of the paper checklist.  
+  - The app calls an AI service to parse the image into structured checklist items.  
+  - Renter can rename items, add notes, and organize them into meaningful categories.  
+
+- **Move‑in / move‑out photos per checklist item**
+  - For each item, renters can capture **move‑in** and **move‑out** photos (or short videos).  
+  - Photos are timestamped and attached to the specific area (e.g. “Bedroom wall by window”).  
+  - UI suggests time windows for fairness but still allows late uploads so renters can always finish their report.  
+
+- **AI‑assisted lease advisor**
+  - Separate “Lease Advisor” tab where renters upload a lease PDF or paste text.  
+  - Backend uses Google Gemini to:
+    - Summarize key clauses  
+    - Highlight important information tenants often forget  
+    - Surface local/legal considerations and risks  
+  - Output is structured into clear sections that are easy to skim on mobile.  
+
+- **PDF report generation & submission**
+  - The client compiles checklist items, notes, and photos into a clean PDF using `pdf-lib`.  
+  - The PDF is submitted to the backend and stored in the database (as base64 text) along with metadata (renter, unit, timestamps, size).  
+  - Renters can:
+    - Download the PDF for their own records  
+    - Submit a “final” report to their property manager  
+
+- **Admin dashboard for buildings, renters, and submissions**
+  - Admin login for property managers.  
+  - Register a company, add apartment buildings and units.  
+  - Generate renter invitations with tokens and track statuses: **pending / used / active**.  
+  - View active renters, their move‑in dates, and submitted inspection PDFs.  
+
+---
+
+### 🧱 High‑Level Architecture & Tech Stack
+
+- **Framework & UI**
+  - **Next.js 16 App Router** (`src/app/**`)  
+  - **React 19** with TypeScript  
+  - Styling via utility classes defined in `globals.css`  
+  - Mobile‑first UX designed for renters on phones  
+
+- **Routing & Pages (selected)**
+  - `landing/` – marketing / entry page  
+  - `access/` – renter token entry (6‑digit access token)  
+  - `register/` – renter account creation, pre‑filled from invitation  
+  - `renter/login/` – renter login  
+  - `app/` – renter inspection app (checklist, photos, lease advisor, PDF)  
+  - `admin/` – admin dashboard for invitations, units, and submissions  
+  - `admin/login/`, `admin/signup/` – admin auth flows  
+  - `company/register/` – property manager company + portfolio onboarding  
+
+- **API & Backend (Next.js Route Handlers)**
+  - `src/app/api/**` contains all server endpoints, including:
+    - `admin/*` – admin auth, sessions, and renter listing  
+    - `renters/*` – renter auth, draft storage, and session lookups  
+    - `company/register` – create company + apartments + units + invitations  
+    - `portfolio/*` – load/save portfolio, send and withdraw invites  
+    - `invitations/[token]` – load invitation preview from a token  
+    - `validate-token` – verify a renter’s 6‑digit access token  
+    - `renter-submissions/*` – accept and serve submitted inspection PDFs  
+    - `analyze-lease` / `parse-checklist` – AI endpoints that call Google Gemini  
+
+- **Database & Persistence**
+  - **PostgreSQL** with **Drizzle ORM** (`src/server/db/schema.ts`)  
+  - Key tables:
+    - `rental_companies`, `apartment_buildings`, `rental_units`  
+    - `renter_invitations` with `accessToken`, status, timestamps  
+    - `renters`, `renter_sessions` (cookie‑backed auth)  
+    - `submissions` (final PDFs + metadata)  
+    - `renter_drafts` (JSON snapshot of in‑progress checklists and photos)  
+  - Database client via `drizzle-orm/node-postgres` in `src/server/db/client.ts`.  
+
+- **Authentication & Invitations**
+  - Cookie‑based sessions for admins and renters.  
+  - Renter onboarding flow:
+    1. Admin generates invitations (one per renter & unit).  
+    2. System reserves a **unique 6‑digit `accessToken`** in `renter_invitations`.  
+    3. Email is sent with the token and link to the hosted `/access` page.  
+    4. Renter validates the token, then registers and logs in.  
+    5. Once the invitation is used, status is updated (for example, to `used` or `active`).  
+
+- **Email Delivery**
+  - **SendGrid** via `@sendgrid/mail` (`src/server/email.ts`).  
+  - Invitation email includes:
+    - Renter name, company, building, unit  
+    - The 6‑digit access token  
+    - Direct link to the deployed TrustRent access page  
+  - If API key or sender is missing, the server logs a warning and skips sending (useful for local development).  
+
+- **AI & Document Processing**
+  - Google **Gemini 1.5 Flash** (via `@google/generative-ai`) for:
+    - Parsing checklist photos into structured items (`parse-checklist` route)  
+    - Analyzing lease PDFs or pasted text (`analyze-lease` route)  
+  - Prompts are tuned to produce:
+    - Clear sections (key info, forgotten details, legal context, risks)  
+    - Tenant‑friendly language in multiple supported languages.  
+
+- **PDF Generation**
+  - `pdf-lib` is used client‑side to:
+    - Lay out renter profile, dates, and unit info  
+    - Render checklist items with notes  
+    - Embed move‑in / move‑out photos with timestamps  
+  - Final PDF is uploaded via `FormData` to `api/renter-submissions` and stored in Postgres.  
+
+- **Hosting / Deployment**
+  - Designed to run on platforms like **Render**, with:
+    - Continuous deployment from GitHub  
+    - Environment variables for DB connection, SendGrid, and AI keys  
+
+---
+
+### 🔁 End‑to‑End Flow Summary
+
+1. **Property manager onboards**
+   - Registers a company, adds buildings and units.  
+   - Generates renter invitations (one per unit) with 6‑digit access tokens.  
+
+2. **Renter receives email**
+   - Invitation email from SendGrid contains the token and link to the `/access` page.  
+
+3. **Renter verifies token and registers**
+   - Enters token on the access page, sees unit + building information.  
+   - Creates an account and is redirected into the TrustRent app.  
+
+4. **Renter completes move‑in inspection**
+   - Uploads a checklist photo → AI parses into items.  
+   - Edits labels, adds notes, and captures move‑in photos for each item.  
+   - Optionally uses Lease Advisor to understand the lease.  
+
+5. **Renter generates & submits final PDF**
+   - Downloads a personal copy.  
+   - Submits a final PDF to the property manager; submission is stored in Postgres.  
+
+6. **Admin reviews**
+   - Uses the admin dashboard to view invitations, active renters, and submission history.  
+   - Downloads the renter’s PDF for records or to resolve any future disputes.  
+
+---
+
+TrustRent is built to be **practical enough for real properties** and **friendly enough for first‑time renters**.  
+If you’re extending it, start by exploring `src/app/app/page.tsx` (renter experience), `src/app/admin/page.tsx` (admin dashboard), and `src/server/**/*` (database + email + AI integration).
