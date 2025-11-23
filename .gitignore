@@ -1,0 +1,45 @@
+# Node / Next.js build artifacts
+node_modules
+.next
+.turbo
+.swc
+dist
+out
+
+# Environment & secrets (never commit these)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# OS / editor files
+.DS_Store
+Thumbs.db
+.idea
+.vscode
+
+# TypeScript build info
+*.tsbuildinfo
+
+# Coverage / tests
+coverage
+
+# Render / Vercel / tooling
+.vercel
+
+# Local images or scratch files in project root
+Trust2-removebg-preview.png
+
+# LeaseAdvisor dev dependencies (if you install separately)
+LeaseAdvisor/node_modules
+LeaseAdvisor/.next
+
+
