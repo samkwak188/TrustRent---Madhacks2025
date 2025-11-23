@@ -60,6 +60,9 @@ export async function loginRenter(email: string, password: string) {
   if (!renter) {
     throw new Error("Invalid email or password.");
   }
+  if (!renter.passwordHash) {
+    throw new Error("Invalid email or password.");
+  }
   const valid = await bcrypt.compare(password, renter.passwordHash);
   if (!valid) {
     throw new Error("Invalid email or password.");

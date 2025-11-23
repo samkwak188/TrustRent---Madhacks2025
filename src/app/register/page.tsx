@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 
@@ -11,7 +11,7 @@ type RegistrationForm = {
   confirmPassword: string;
 };
 
-export default function RegisterPage() {
+function RegisterPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const token = searchParams?.get("token") ?? "";
@@ -254,5 +254,19 @@ export default function RegisterPage() {
         </div>
       </main>
     </div>
+  );
+}
+
+export default function RegisterPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+          <p className="text-sm text-slate-600">Loading registration...</p>
+        </div>
+      }
+    >
+      <RegisterPageContent />
+    </Suspense>
   );
 }

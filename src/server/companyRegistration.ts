@@ -44,7 +44,7 @@ export type InvitationPreview = {
   renterEmail: string;
   apartmentName: string;
   unitNumber: string;
-  inviteCode: string;
+  accessToken: string;
   inviteUrl: string;
 };
 
@@ -52,8 +52,7 @@ type InvitationRecord = {
   invitationId: string;
   renterName: string;
   renterEmail: string;
-  inviteCode: string;
-  inviteToken: string;
+  accessToken: string;
   status: string;
   unitNumber: string;
   apartmentName: string;
@@ -66,17 +65,17 @@ function buildInviteUrl(token: string) {
   return `${normalizedBaseUrl}/register?token=${token}`;
 }
 
-function generateInviteCode() {
+function generateAccessToken() {
   return Math.floor(100000 + Math.random() * 900000).toString();
 }
 
-async function reserveInviteCode(tx: SqlClient): Promise<string> {
+async function reserveAccessToken(tx: SqlClient): Promise<string> {
   for (let attempt = 0; attempt < 10; attempt++) {
-    const code = generateInviteCode();
+    const code = generateAccessToken();
     const existing = await tx
       .select({ id: renterInvitations.id })
       .from(renterInvitations)
-      .where(eq(renterInvitations.inviteCode, code));
+      .where(eq(renterInvitations.accessToken, code));
     if (existing.length === 0) {
       return code;
     }
@@ -96,7 +95,7 @@ function simulateInvitationEmail(invite: InvitationPreview) {
       `Renter: ${invite.renterName}`,
       `Apartment: ${invite.apartmentName}`,
       `Unit: ${invite.unitNumber}`,
-      `One-time code: ${invite.inviteCode}`,
+      `Access token: ${invite.accessToken}`,
       `Link: ${invite.inviteUrl}`,
       "------------------------------",
     ].join("\n")
@@ -148,8 +147,7 @@ export async function registerRentalCompany(
 
         for (const renter of unit.renters) {
           const invitationId = randomUUID();
-          const inviteToken = randomUUID();
-          const inviteCode = await reserveInviteCode(tx);
+          const accessToken = await reserveAccessToken(tx);
           const renterName = renter.fullName.trim();
           const renterEmail = renter.email.trim().toLowerCase();
 
@@ -158,8 +156,7 @@ export async function registerRentalCompany(
             unitId,
             renterName,
             renterEmail,
-            inviteCode,
-            inviteToken,
+            accessToken,
             status: "pending",
             createdAt: now,
           });
@@ -170,8 +167,8 @@ export async function registerRentalCompany(
             renterEmail,
             apartmentName,
             unitNumber,
-            inviteCode,
-            inviteUrl: buildInviteUrl(inviteToken),
+            accessToken,
+            inviteUrl: buildInviteUrl(accessToken),
           });
         }
       }
@@ -188,8 +185,7 @@ export async function registerRentalCompany(
         companyName: trimmedCompanyName,
         apartmentName: invite.apartmentName,
         unitNumber: invite.unitNumber,
-        inviteCode: invite.inviteCode,
-        inviteUrl: invite.inviteUrl,
+        accessToken: invite.accessToken,
       })
     )
   );
@@ -206,8 +202,7 @@ async function fetchInvitationRecordByToken(
       invitationId: renterInvitations.id,
       renterName: renterInvitations.renterName,
       renterEmail: renterInvitations.renterEmail,
-      inviteCode: renterInvitations.inviteCode,
-      inviteToken: renterInvitations.inviteToken,
+      accessToken: renterInvitations.accessToken,
       status: renterInvitations.status,
       unitNumber: rentalUnits.unitNumber,
       apartmentName: apartmentBuildings.name,
@@ -225,7 +220,7 @@ async function fetchInvitationRecordByToken(
       rentalCompanies,
       eq(apartmentBuildings.companyId, rentalCompanies.id)
     )
-    .where(eq(renterInvitations.inviteToken, token.trim()))
+    .where(eq(renterInvitations.accessToken, token.trim()))
     .limit(1);
 
   if (rows.length === 0) {
@@ -246,7 +241,7 @@ export async function getInvitationPreview(token: string) {
     postalCode: record.postalCode,
     companyName: record.companyName,
     status: record.status,
-    inviteCode: record.inviteCode,
+    accessToken: record.accessToken,
     companyId: record.companyId,
   };
 }
@@ -255,7 +250,7 @@ const normalize = (value: string) => value.trim().toLowerCase();
 
 export async function acceptInvitationAndCreateAccount(params: {
   token: string;
-  inviteCode: string;
+  accessToken: string;
   fullName: string;
   apartmentName: string;
   unitNumber: string;
@@ -273,8 +268,8 @@ export async function acceptInvitationAndCreateAccount(params: {
     );
   }
 
-  if (record.inviteCode !== params.inviteCode.trim()) {
-    throw new Error("The verification code does not match our records.");
+  if (record.accessToken !== params.accessToken.trim()) {
+    throw new Error("The access token does not match our records.");
   }
 
   if (normalize(record.apartmentName) !== normalize(params.apartmentName)) {
@@ -297,13 +292,13 @@ export async function acceptInvitationAndCreateAccount(params: {
 
   const { createRenterAccount } = await import("./renterAuth");
   
-  const acceptedAt = Date.now();
+  const activatedAt = Date.now();
 
   await db
     .update(renterInvitations)
     .set({
-      status: "accepted",
-      acceptedAt,
+      status: "used",
+      activatedAt,
       renterName: params.fullName.trim(),
     })
     .where(eq(renterInvitations.id, record.invitationId));

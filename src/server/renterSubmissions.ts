@@ -112,7 +112,7 @@ export async function upsertSubmission(params: {
 }
 
 export async function listRenterRows(adminId?: string) {
-  let query = db
+  const baseQuery = db
     .select({
       renterId: renters.id,
       fullName: renters.fullName,
@@ -133,11 +133,11 @@ export async function listRenterRows(adminId?: string) {
     .leftJoin(submissions, eq(renters.id, submissions.renterId))
     .leftJoin(rentalCompanies, eq(renters.companyId, rentalCompanies.id));
 
-  if (adminId) {
-    query = query.where(eq(rentalCompanies.adminId, adminId));
-  }
+  const filteredQuery = adminId
+    ? baseQuery.where(eq(rentalCompanies.adminId, adminId))
+    : baseQuery;
 
-  const rows = await query.orderBy(
+  const rows = await filteredQuery.orderBy(
     asc(renters.apartmentName),
     asc(renters.unitNumber),
     asc(renters.fullName)
